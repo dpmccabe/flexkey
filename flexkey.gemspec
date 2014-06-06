@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Devin McCabe']
   spec.email         = ['devin.mccabe@gmail.com']
   spec.description   = %q{Flexible product key generation}
-  spec.summary       = %q{Use Flexkey to generate random product keys for use in software licenses, invoices, etc.}
+  spec.summary       = %q{Use Flexkey to generate random product keys for use in software licenses,
+    invoices, etc.}
   spec.homepage      = 'https://github.com/dpmccabe/flexkey'
   spec.license       = 'MIT'
 

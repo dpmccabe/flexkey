@@ -1,6 +1,7 @@
 # Flexkey
 
-Flexkey is a Ruby gem for generating unique, random strings for use as product keys, redemption codes, invoice numbers, etc.
+Flexkey is a Ruby gem for generating unique, random strings for use as product keys, redemption
+codes, invoice numbers, etc.
 
 ## Installation
 

@@ -11,7 +11,9 @@ describe Flexkey::CharPool do
 
   describe 'utility methods' do
     it 'should provide a list of available character types' do
-      expect(Flexkey::CharPool.available_char_types).to eq([:alpha_upper, :alpha_lower, :numeric, :alpha_upper_clear, :alpha_lower_clear, :numeric_clear, :symbol, :basic_symbol])
+      expect(Flexkey::CharPool.available_char_types).to eq([
+        :alpha_upper, :alpha_lower, :numeric, :alpha_upper_clear, :alpha_lower_clear,
+        :numeric_clear, :symbol, :basic_symbol])
     end
 
     it 'should provide a list of character pools for available character types' do
@@ -31,19 +33,27 @@ describe Flexkey::CharPool do
   context 'when a single type is requested' do
     describe 'validations' do
       it 'raises an exception for an unknown character pool symbol' do
-        expect { Flexkey::CharPool.generate(:bad) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool :bad')
+        expect {
+          Flexkey::CharPool.generate(:bad)
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool :bad')
       end
 
       it 'raises an exception for an nil character pool symbol' do
-        expect { Flexkey::CharPool.generate(nil) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool nil')
+        expect {
+          Flexkey::CharPool.generate(nil)
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool nil')
       end
 
       it 'raises an exception for a non-symbol type' do
-        expect { Flexkey::CharPool.generate(123) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool 123')
+        expect {
+          Flexkey::CharPool.generate(123)
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool 123')
       end
 
       it 'raises an exception for a blank custom type' do
-        expect { Flexkey::CharPool.generate('') }.to raise_error(Flexkey::CharPoolError, 'A custom char_pool was blank')
+        expect {
+          Flexkey::CharPool.generate('')
+        }.to raise_error(Flexkey::CharPoolError, 'A custom char_pool was blank')
       end
     end
 
@@ -87,56 +97,79 @@ describe Flexkey::CharPool do
   context 'when multiple types are requested' do
     describe 'validations' do
       it 'raises an exception for an unknown character pool symbol' do
-        expect { Flexkey::CharPool.generate({ alpha_upper: 0.5, bad: 0.5 }) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool :bad')
+        expect {
+          Flexkey::CharPool.generate({ alpha_upper: 0.5, bad: 0.5 })
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool :bad')
       end
 
       it 'raises an exception for a non-symbol type' do
-        expect { Flexkey::CharPool.generate({ alpha_upper: 0.5, 123 => 0.5 }) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool 123')
+        expect {
+          Flexkey::CharPool.generate({ alpha_upper: 0.5, 123 => 0.5 })
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool 123')
       end
 
       it 'raises an exception for a negative proportion' do
-        expect { Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: -0.5 }) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion -0.5')
+        expect {
+          Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: -0.5 })
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion -0.5')
       end
 
       it 'raises an exception for a non-numeric proportion' do
-        expect { Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: 'test' }) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion "test"')
+        expect {
+          Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: 'test' })
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion "test"')
       end
 
       it 'raises an exception for missing proportion' do
-        expect { Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: nil }) }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion nil')
+        expect {
+          Flexkey::CharPool.generate({ alpha_upper: 0.5, numeric: nil })
+        }.to raise_error(Flexkey::CharPoolError, 'Invalid char_pool proportion nil')
       end
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in equal proportions' do
-      expect(cpj({ alpha_upper: 0.5, alpha_lower: 0.5 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in equal proportions' do
+      expect(cpj({ alpha_upper: 0.5, alpha_lower: 0.5 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in equal proportions (by odds)' do
-      expect(cpj({ alpha_upper: 1, alpha_lower: 1 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in a 1:1 proportion' do
+      expect(cpj({ alpha_upper: 1, alpha_lower: 1 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in a 3:1 proportion' do
-      expect(cpj({ alpha_upper: 0.75, alpha_lower: 0.25 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in a 3:1 proportion' do
+      expect(cpj({ alpha_upper: 0.75, alpha_lower: 0.25 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+        'abcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in a 3:1 proportion (by odds)' do
-      expect(cpj({ alpha_upper: 3, alpha_lower: 1 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in a 3:1 proportion' do
+      expect(cpj({ alpha_upper: 3, alpha_lower: 1 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+        'abcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in a 1:3 proportion' do
-      expect(cpj({ alpha_upper: 0.25, alpha_lower: 0.75 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in a 1:3 proportion' do
+      expect(cpj({ alpha_upper: 0.25, alpha_lower: 0.75 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz' + 
+        'abcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in a 0:1 proportion' do
+    it 'generates a pool of upper and lowercase alphabetical types in a 0:1 proportion' do
       expect(cpj({ alpha_upper: 0, alpha_lower: 99 })).to eq('abcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase and lowercase alphabetical types in equal proportions not summing to 1' do
-      expect(cpj({ alpha_upper: 0.2, alpha_lower: 0.2 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    it 'generates a pool of upper and lowercase alphabetical types in a 0.2:0.2 proportion' do
+      expect(cpj({ alpha_upper: 0.2, alpha_lower: 0.2 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
     end
 
-    it 'generates a pool of uppercase alphabetical and numeric character types in equal proportions' do
-      expect(cpj({ alpha_upper: 0.5, numeric: 0.5 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789')
+    it 'generates a pool of uppercase and numeric character types in equal proportions' do
+      expect(cpj({ alpha_upper: 0.5, numeric: 0.5 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ' + 
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0' +
+        '1234567890123456789012345678901234567890123456789012345678901234567890123456789' +
+        '01234567890123456789012345678901234567890123456789')
     end
 
     it 'generates a pool of numeric and a custom type in equal proportions' do

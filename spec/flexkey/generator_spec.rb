@@ -133,9 +133,20 @@ describe Flexkey::Generator do
 
     it 'raises an exception when too many keys are requested' do
       expect {
-        Flexkey::Generator.new(format: 'nnn', char_pool: {
-          'n' => :numeric, 'a' => :alpha_upper }).generate(1001)
+        Flexkey::Generator.new(format: 'nnn', char_pool: { 'n' => :numeric }).generate(1001)
       }.to raise_error(Flexkey::GeneratorError, "There are only 1000 possible keys")
     end
+  end
+
+  it 'allows inspection of an instance' do
+    fk = Flexkey::Generator.new(format: 'nnn', char_pool: { 'n' => :numeric })
+    expect(fk.inspect).to eq(%q{#<Flexkey::Generator @format="nnn", @char_pool={"n"=>:numeric}, } +
+      %q{@n_possible_keys=1000>})
+  end
+
+  it 'displays an instance as a string' do
+    fk = Flexkey::Generator.new(format: 'nnn', char_pool: { 'n' => :numeric })
+    expect(fk.to_s).to eq(%q{#<Flexkey::Generator @format="nnn", @char_pool={"n"=>:numeric}, } +
+      %q{@n_possible_keys=1000>})
   end
 end

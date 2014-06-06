@@ -6,7 +6,8 @@ module Flexkey
 
     # Generates an array of characters of the specified types and proportions
     #
-    # @param arg [Hash{ Symbol, String => Fixnum }, Symbol, String]
+    # @param arg [Hash{ Symbol, String => Fixnum }, Symbol, String] a single character type or a
+    #   hash of several character types and their proportions
     #
     # @return [Array<String>] the requested character pool
     #

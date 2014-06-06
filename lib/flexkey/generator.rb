@@ -21,10 +21,10 @@ module Flexkey
     # @return [Flexkey] the Flexkey instance
     #
     # @example
-    #   Flexkey::Generator.new(format: 'nnn-aaa', char_pool: { 'n' => :numeric,
-    #                                                          'a' => :alpha_upper_clear })
-    #   Flexkey::Generator.new(format: 'ccccc-ccccc', char_pool: { 'c' => { alpha_upper: 0.75,
-    #                                                                       alpha_lower: 0.25 } })
+    #   Flexkey::Generator.new(format: 'nnn-aaa',
+    #                          char_pool: { 'n' => :numeric, 'a' => :alpha_upper_clear })
+    #   Flexkey::Generator.new(format: 'ccccc-ccccc',
+    #                          char_pool: { 'c' => { alpha_upper: 0.75, alpha_lower: 0.25 } })
     #   Flexkey::Generator.new(format: 'key_#######', char_pool: { '#' => :numeric_clear })
     #   Flexkey::Generator.new(format: 'a-nnnn', char_pool: { 'a' => :alpha_upper, 'n' => '12345' })
     def initialize(args = {})
@@ -55,8 +55,8 @@ module Flexkey
     # @return [Array<String>] `n` keys
     #
     # @example
-    #   fk = Flexkey::Generator.new(format: 'nnn-aaa', char_pool: { 'n' => :numeric,
-    #                                                               'a' => :alpha_upper_clear })
+    #   fk = Flexkey::Generator.new(format: 'nnn-aaa',
+    #                               char_pool: { 'n' => :numeric, 'a' => :alpha_upper_clear })
     #   fk.generate
     #   fk.generate(10)
     def generate(n = 1)
@@ -80,6 +80,12 @@ module Flexkey
         keys
       end
     end
+
+    def inspect
+      %Q{#<#{self.class} @format="#{format}", @char_pool=#{@char_pool}, } +
+      %Q{@n_possible_keys=#{@n_possible_keys}>}
+    end
+    alias to_s inspect
 
     private
 

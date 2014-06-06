@@ -177,7 +177,8 @@ describe Flexkey::CharPool do
     end
 
     it 'generates a pool of uppercase and another custom type in equal proportions' do
-      expect(cpj({ alpha_upper: 1, '0123456789!@#' => 1 })).to eq('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#0123456789!@#')
+      expect(cpj({ alpha_upper: 1, '0123456789!@#' => 1 })).to eq(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#0123456789!@#')
     end
 
     it 'generates a pool of two custom types in a 1:4 proportion' do

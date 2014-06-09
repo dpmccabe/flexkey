@@ -144,7 +144,9 @@ keygen.n_possible_keys
 # => 26000
 ```
 
-The instance method `n_possible_keys` is available for reference.
+The instance method `n_possible_keys` is available for reference as seen above.
+
+Since `generate(n)` works by building an array of randomly-generated keys while checking new keys for uniqueness, it's not a good choice for generating all possible keys for a particular format. In that case, it makes more sense to simply build your list of keys iteratively.
 
 ##### CharPool
 
@@ -153,7 +155,7 @@ If you're only interested in using the proportional sampling feature of Flexkey 
 ```ruby
 char_pool = Flexkey::CharPool.generate({ alpha_upper: 0.75, numeric: 0.25 })
 10.times.map { char_pool.sample }.join
-=> "XC3RPKKWKA"
+=> "XC3RPKKWK4"
 ```
 
 ### Additional documentation

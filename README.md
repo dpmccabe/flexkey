@@ -158,7 +158,7 @@ char_pool = Flexkey::CharPool.generate({ alpha_upper: 0.75, numeric: 0.25 })
 
 ### Additional documentation
 
-Somewhere.
+At [Rubydocs](http://rubydoc.info/gems/flexkey/frames).
 
 ### Contributing
 

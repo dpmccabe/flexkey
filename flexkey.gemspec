@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
     invoices, etc.}
   spec.homepage      = 'https://github.com/dpmccabe/flexkey'
   spec.license       = 'MIT'
+  spec.required_ruby_version = '>= 1.9.3'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -23,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-its'
+  spec.add_development_dependency 'yard'
 end

@@ -24,7 +24,7 @@ None. Flexkey has been tested with Ruby 1.9.3 and 2.0.
 
 ##### Basic usage
 
-Instantiate a new generator with `Flexkey::Generator.new` and provide a `format` and `char_pool`. Then, generate single or multiple keys with the `generate` method:
+Instantiate a new generator with `Flexkey::Generator.new` and provide a `format` and `char_pool`. Then, generate a single key or multiple unique keys with the `generate` method:
 
 ```ruby
 keygen = Flexkey::Generator.new(format: 'aaaa-aa', char_pool: { 'a' => :alpha_upper })
@@ -36,7 +36,11 @@ keygen.generate(3)
 ```
 
 In this example, Flexkey generates a key by replacing each instance of `'a'` in the string `'aaaa-aa'` with a character
-randomly drawn from a pool of uppercase letters while leaving unspecified characters (i.e. `'-'`) alone. There are several built-in types available:
+randomly drawn from a pool of uppercase letters while leaving unspecified characters (i.e. `'-'`) alone.
+
+Since you're most likely persisting generated keys in a database, even though `generate(n)` will return `n` _unique_ keys, you'll still want to validate them for uniqueness against keys you've previously saved.
+
+##### Built-in character types
 
 | **Character type** | **Description** |
 |-------------------|--------------------------------------------------------|
